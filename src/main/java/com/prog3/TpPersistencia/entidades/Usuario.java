@@ -14,28 +14,28 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name="usuario")
-public class Usuario extends BaseEntidad{
+@Table(name = "usuario")
+public class Usuario extends BaseEntidad {
     private String nombre;
     private String password;
     private String rol;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany()//cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER
 
     @JoinColumn(name = "Usuario_id")
 
     @Builder.Default
-    private List<Pedido> pedidos= new ArrayList<>();
+    private List<Pedido> pedidos = new ArrayList<>();
 
     //Metodos
-    public void agregarPedido(Pedido ped){
+    public void agregarPedido(Pedido ped) {
         pedidos.add(ped);
     }
 
     public void mostrarPedidos() {
         System.out.println("Pedido de " + nombre + ":");
         for (Pedido pedido : pedidos) {
-            System.out.println("Fecha: " + pedido.getFecha()+"/nN° de factura: "+ pedido.getFactura().getNumero());
+            System.out.println("Fecha: " + pedido.getFecha() + "/nN° de factura: " + pedido.getFactura().getNumero());
         }
     }
 }
