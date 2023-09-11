@@ -17,6 +17,6 @@ public class DetallePedido extends BaseEntidad{
     private double subtotal;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "detallePedido")
+    @JoinColumn(name = "producto_id")
     private Producto producto;
 }

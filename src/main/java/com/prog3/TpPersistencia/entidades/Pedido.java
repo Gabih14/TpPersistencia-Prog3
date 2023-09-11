@@ -30,7 +30,7 @@ public class Pedido extends BaseEntidad{
     private double total;
 
     @OneToOne()//cascade = CascadeType.ALL, orphanRemoval = true
-    @JoinColumn(name = "factura")
+    @JoinColumn(name = "factura_id")
     private Factura factura;
 
 
