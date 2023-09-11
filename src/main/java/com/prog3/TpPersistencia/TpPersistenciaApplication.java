@@ -34,6 +34,8 @@ public class TpPersistenciaApplication {
     FacturaRepository facturaRepository;
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    ClienteRepository clienteRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(TpPersistenciaApplication.class, args);
@@ -127,6 +129,17 @@ public class TpPersistenciaApplication {
             //Agregar pedido a usuario
             usuario.agregarPedido(pedido);
             usuarioRepository.save(usuario);
+
+            //Cliente
+            Cliente cliente = Cliente.builder()
+                    .nombre("Alejo")
+                    .apellido("Alvarez")
+                    .telefono("2524556")
+                    .email("alejo@mail.com")
+                    .build();
+            //Se agrega pedido a cliente
+            cliente.agregarPedido(pedido);
+            clienteRepository.save(cliente);
 
 
         };
