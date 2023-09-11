@@ -1,20 +1,20 @@
 package com.prog3.TpPersistencia;
 
-import com.prog3.TpPersistencia.entidades.ConfiguracionGeneral;
-import com.prog3.TpPersistencia.entidades.DetallePedido;
-import com.prog3.TpPersistencia.entidades.Producto;
-import com.prog3.TpPersistencia.entidades.Rubro;
+import com.prog3.TpPersistencia.entidades.*;
+import com.prog3.TpPersistencia.enums.Estado;
+import com.prog3.TpPersistencia.enums.FormaPago;
 import com.prog3.TpPersistencia.enums.Tipo;
-import com.prog3.TpPersistencia.repositorios.ConfiguracionGeneralRepository;
-import com.prog3.TpPersistencia.repositorios.DetallePedidoRepository;
-import com.prog3.TpPersistencia.repositorios.ProductoRepository;
-import com.prog3.TpPersistencia.repositorios.RubroRepository;
+import com.prog3.TpPersistencia.enums.TipoEnvio;
+import com.prog3.TpPersistencia.repositorios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 @SpringBootApplication
@@ -28,7 +28,10 @@ public class TpPersistenciaApplication {
 	RubroRepository rubroRepository;
 	@Autowired
 	DetallePedidoRepository detallePedidoRepository;
-
+	@Autowired
+	PedidoRepository pedidoRepository;
+	@Autowired
+	FacturaRepository facturaRepository;
 	public static void main(String[] args) {
 		SpringApplication.run(TpPersistenciaApplication.class, args);
 		System.out.println("hola");
@@ -86,6 +89,31 @@ public class TpPersistenciaApplication {
 			detallePedido.setProducto(producto);
 
 			detallePedidoRepository.save(detallePedido);
+
+			//Facturas
+
+			Factura factura=Factura.builder()
+					.fecha(LocalDate.now())
+					.numero(777)
+					.descuento(20.5)
+					.formaPago(FormaPago.mp)
+					.total(542)
+					.build();
+			facturaRepository.save(factura);
+
+			//Pedido
+			Pedido pedido = Pedido.builder()
+					.fecha("Marzo 2")
+					.estado(Estado.iniciado)
+					.horaEstimada(LocalTime.now())
+					.tipoEnvio(TipoEnvio.retira)
+					.total(52345.5)
+					.factura(factura)
+					.build();
+
+			//Agregar detalle pedido a pedido
+			pedido.agregarDetPedido(detallePedido);
+			pedidoRepository.save(pedido);
 
 		};
 	}

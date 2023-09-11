@@ -1,11 +1,15 @@
 package com.prog3.TpPersistencia.entidades;
 
+import com.prog3.TpPersistencia.enums.Estado;
+import com.prog3.TpPersistencia.enums.TipoEnvio;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,24 +19,22 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name="factura")
+@Table(name="pedido")
 public class Pedido extends BaseEntidad{
     private String fecha;
-    private enum estado{
-        iniciado, preparado, finalizado
-    }
-    private Date horaEstimada;
-    private enum tipoEnvio{
-        delivery, retira
-    }
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+    private LocalTime horaEstimada;
+    @Enumerated(EnumType.STRING)
+    private TipoEnvio tipoEnvio;
     private double total;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne()//cascade = CascadeType.ALL, orphanRemoval = true
     @JoinColumn(name = "factura")
     private Factura factura;
 
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany()//cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER
     @JoinColumn(name = "Pedido_id")
     @Builder.Default
     private List<DetallePedido> dPedidos= new ArrayList<>();
