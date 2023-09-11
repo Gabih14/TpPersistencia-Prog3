@@ -20,7 +20,7 @@ public class Domicilio extends BaseEntidad {
     private String numero;
     private String localidad;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany()//cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER
 
     @JoinColumn(name = "Domicilio_id")
 
@@ -39,7 +39,7 @@ public class Domicilio extends BaseEntidad {
         }
     }
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany()//cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER
 
     @JoinColumn(name = "Domicilio_id")
 

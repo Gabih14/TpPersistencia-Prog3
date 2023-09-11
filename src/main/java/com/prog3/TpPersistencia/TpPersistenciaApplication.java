@@ -36,6 +36,8 @@ public class TpPersistenciaApplication {
     UsuarioRepository usuarioRepository;
     @Autowired
     ClienteRepository clienteRepository;
+    @Autowired
+    DomicilioRepository domicilioRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(TpPersistenciaApplication.class, args);
@@ -140,6 +142,19 @@ public class TpPersistenciaApplication {
             //Se agrega pedido a cliente
             cliente.agregarPedido(pedido);
             clienteRepository.save(cliente);
+
+            //Domicilio
+            Domicilio domicilio = Domicilio.builder()
+                    .calle("Suipacha")
+                    .numero("852")
+                    .localidad("Guaymallen")
+                    .build();
+            //Se agrega pedido a Domicilio
+            domicilio.agregarPedido(pedido);
+
+            //Se agrega cliente a domicilio
+            domicilio.agregarCliente(cliente);
+            domicilioRepository.save(domicilio);
 
 
         };
